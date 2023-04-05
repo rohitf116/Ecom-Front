@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { listProductDeatils } from "../actions/productActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-
+import { addToCart } from "../actions/cartActions";
 const ProductScreen = () => {
   const [qty, setQty] = useState(0);
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const ProductScreen = () => {
     dispatch(listProductDeatils(id));
   }, [dispatch, id]);
   const submitHandler = () => {
-    navigate(`/${id}?qty=${qty}`);
+    dispatch(addToCart(id, Number(qty)));
   };
   return (
     <Container>
