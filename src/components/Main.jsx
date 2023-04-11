@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import HomeScreen from "../screens/HomeScreen";
-import { Outlet } from "react-router-dom";
+
 const Main = () => {
   return (
     <div>
@@ -10,7 +10,6 @@ const Main = () => {
           <HomeScreen />
         </Container>
       </main>
-      <Outlet />
     </div>
   );
 };
