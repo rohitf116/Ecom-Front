@@ -5,7 +5,11 @@ const Product = ({ product }) => {
   return (
     <Card className="my-3 p-3 rounded">
       <a href={`/product/${product._id}`}>
-        <Card.Img src={`${product.image}`} variant="top" />
+        <Card.Img
+          src={`${product.image}`}
+          style={{ width: "200px", height: "250px" }}
+          variant="top"
+        />
       </a>
       <Card.Body>
         <a href={`/product/${product._id}`}>
