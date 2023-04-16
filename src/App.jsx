@@ -5,6 +5,9 @@ import Main from "./components/Main";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import VerifyEmail from "./screens/VerifyEmail";
+import ProfileScreen from "./screens/ProfileScreen";
 const App = () => {
   return (
     <>
@@ -13,8 +16,11 @@ const App = () => {
           <Route index element={<Main />} />
           <Route path="product/:id" element={<ProductScreen />} />
           <Route path="login" element={<LoginScreen />} />
+          <Route path="register" element={<RegisterScreen />} />
           <Route path="footer" element={<Footer />} />
           <Route path="/:id?" element={<CartScreen />} />
+          <Route path="/verifyEmail" element={<VerifyEmail />} />
+          <Route path="/profile" element={<ProfileScreen />} />
         </Route>
       </Routes>
     </>

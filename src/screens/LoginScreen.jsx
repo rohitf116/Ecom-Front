@@ -1,29 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
-import { login } from "../actions/userActions";
+import {
+  login,
+  clearUserRegistration,
+  clearLoginError,
+} from "../actions/userActions";
+import { fetchCart } from "../actions/cartActions";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [attemptedLogin, setAttemptedLogin] = useState(false);
   const dispatch = useDispatch();
 
-  const userInfo = useSelector((state) => state.userInfo);
-  console.log(userInfo, "-------");
+  const userLogin = useSelector((state) => state.userLogin);
+  const navigate = useNavigate();
+  const { loading, error, userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    } else if (
+      error === "Please verify your email" &&
+      email &&
+      attemptedLogin
+    ) {
+      navigate(`/verifyEmail?email=${email}`);
+    }
+
+    return () => {
+      dispatch(clearLoginError());
+    };
+  }, [navigate, userInfo, error, email, attemptedLogin, dispatch]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    setAttemptedLogin(true);
+    dispatch(login(email, password)).then(() => {
+      dispatch(fetchCart());
+    });
   };
-  const onChangeHandler = (e) => {
-    e.preventDefault();
-    console.log(e);
+
+  const handleRegisterLinkClick = () => {
+    dispatch(clearUserRegistration());
+    navigate("/register");
   };
   return (
     <FormContainer>
       <h1>sign in</h1>
+      {error && <Message variant="danger">{error}</Message>}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -35,7 +65,7 @@ const LoginScreen = () => {
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId="password">
-          <Form.Label>Email Address</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Enter your password"
@@ -49,7 +79,14 @@ const LoginScreen = () => {
       </Form>
       <Row>
         <Col>
-          New User? <Link to="/">Register</Link>
+          New User?
+          <Button
+            to="#"
+            className="btn bg-info rounded btn-primary mx-3"
+            onClick={handleRegisterLinkClick}
+          >
+            Register
+          </Button>
         </Col>
       </Row>
     </FormContainer>
