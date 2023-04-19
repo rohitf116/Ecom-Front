@@ -8,6 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import VerifyEmail from "./screens/VerifyEmail";
 import ProfileScreen from "./screens/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 const App = () => {
   return (
     <>
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/:id?" element={<CartScreen />} />
           <Route path="/verifyEmail" element={<VerifyEmail />} />
           <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/shipping" element={<ShippingScreen />} />
         </Route>
       </Routes>
     </>

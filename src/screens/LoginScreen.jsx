@@ -23,7 +23,10 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      const redirect = new URLSearchParams(window.location.search).get(
+        "redirect"
+      );
+      navigate(redirect ? `/${redirect}` : "/");
     } else if (
       error === "Please verify your email" &&
       email &&
